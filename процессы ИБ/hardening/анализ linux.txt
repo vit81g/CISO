@@ -1,0 +1,279 @@
+1. Отключение неиспользуемых файловых систем
+Необходимо отключить следующие файловые системы: cramfs, freevxfs, jffs2, hfs, hfsplus, squashfs.
+Отключение выполняется при помощи следующих команд: rmmod cramfs | rmmod freevxfs | rmmod jffs2 | rmmod hfs | rmmod hfsplus | rmmod squashfs
+
+2. Разметить диск таким образом, чтобы раздел для временных файлов (/tmp) был отдельно
+Необходимо выделить для /tmp отдельный раздел. Раздел /tmp в /etc/fstab должен быть смонтирован с параметрами: tmpfs /tmp tmpfs defaults, rw, nosuid, nodev, noexec, relatime 0 0
+В /etc/fstab изменить настройки для /tmp на следующие: tmpfs /tmp tmpfs defaults, rw, nosuid, nodev, noexec, relatime 0 0
+
+3. Отключить автомонтирование съемных носителей информации
+Необходимо отключить загрузку autofs.
+Выполнить команду: chkconfig autofs off |  systemctl disable autofs |  update-rc.d autofs disable
+
+4. Включить пароль на загрузчик Grub
+При помощи утилит grub-mkpasswd-pbkdf2, grub2-mkconfig, update-grub сгенерировать пароль, записать его в файл /etc/grub.d и обновить загрузчик.
+1) Сгенерировать пароль при помощи команды grub-mkpasswd-pbkdf2. Скопировать значение в буфер обмена. 2) В файл /etc/grub.d/00_header или /etc/grub.d добавить скопированное значение в строку, которая начинается с password_pbkdf2 <username> <сгенерированный пароль>. 3) Сохранить файл. 4) Обновить конфигурацию grub командой update-grub.
+
+5. Включить рандомизацию адресного пространства
+Внести изменения в файл /etc/sysctl.conf, добавив строку kernel.randomize_va_space=2
+1) Выполнить команду sysctl -w kernel.randomize_va_space=2
+
+
+6. Отключить неиспользуемые сервисы inetd
+Выполнить отключение сервисов inetd: chargen, daytime, discard, echo, time, rsh, talk, telnet, tftp.
+В файле /etc/inetd.conf или /etc/inetd.d/<имя сервиса> найти строку с именем сервиса и закоментировать её. Установить параметр disable=yes для всех перечисленных сервисов в /etc/xinetd.conf и /etc/xinetd.d/*
+
+7. Отключить неиспользуемые прикладные сервисы
+Выполнить отключение прикладных сервисов avahi, cups, dhcp, ldap, dns, ftp, nfs, imap, pop3, samba, snmp, rsync
+Для отключения выполнить одну из следующих команд: chkconfig <service name> off или systemctl disable <service name>, где <service name> = avahi-daemon, cups, dhcpd, slapd, nfs, named, vsftpd, dovecot, imapd, exim4, smb, snmpd, rsyncd.
+
+8. Отключить пересылку ip-пакетов
+При помощи утилиты sysctl запретить пересылку ip-пакетов от узла.
+Выполнить команды: # sysctl -w net.ipv4.ip_forward=0
+# sysctl -w net.ipv6.conf.all.forwarding=0
+
+9. Отключить перенаправление пакетов
+При помощи утилиты sysctl запретить перенаправление пакетов от узла.
+Выполнить команды: # sysctl -w net.ipv4.conf.all.send_redirects=0
+# sysctl -w net.ipv4.conf.default.send_redirects=0
+
+10. Отключить маршрутизацию пакетов на узле
+При помощи утилиты sysctl запретить маршрутизацию пакетов.
+Выполнить команды: # sysctl -w net.ipv4.conf.all.accept_source_route=0
+# sysctl -w net.ipv4.conf.default.accept_source_route=0
+# sysctl -w net.ipv6.conf.all.accept_source_route=0
+# sysctl -w net.ipv6.conf.default.accept_source_route=0
+
+
+11. Отключить прием перенаправленных ICMP-пакетов
+При помощи утилиты sysctl запретить  прием перенаправленных ICMP-пакетов
+Выполнить команды: # sysctl -w net.ipv4.conf.all.accept_redirects=0
+# sysctl -w net.ipv4.conf.default.accept_redirects=0
+# sysctl -w net.ipv6.conf.all.accept_redirects=0
+# sysctl -w net.ipv6.conf.default.accept_redirects=0 # sysctl -w net.ipv4.conf.all.secure_redirects=0
+# sysctl -w net.ipv4.conf.default.secure_redirects=0
+# sysctl -w net.ipv6.conf.all.accept_ra=0
+# sysctl -w net.ipv6.conf.default.accept_ra=0
+
+12. Включить игнорирование широковещательных icmp-запросов
+Включить игнорирование широковещательных icmp-запросов	При помощи утилиты sysctl включить игнорирование широковещательных icmp-запросов
+Выполнить команды: # sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1 # sysctl -w net.ipv4.icmp_ignore_bogus_error_responses=1
+
+13. Ограничить доступ к узлу из других сетей
+Настроить файлы /etc/hosts.allow, /etc/hosts.deny
+1) В файл /etc/hosts.allow добавить сети и узлы, которым разрешен доступ: # echo "ALL: <net>/<mask>, <net>/<mask>, ..." >/etc/hosts.allow  2) Запретить доступ из остальных сетей  # echo "ALL: ALL" >> /etc/hosts.deny
+
+
+14. Отключить использование IPv6
+Отредактировать /etc/default/grub добавив строку GRUB_CMDLINE_LINUX="ipv6.disable=1"
+Отредактировать /etc/default/grub добавив строку GRUB_CMDLINE_LINUX="ipv6.disable=1". Обновить конфигурацию загрузчика командой update-grub.
+
+15. Включить сбор событий при помощи auditd
+Установить пакет auditd при помощи менеджера пакетов.
+Выполнить команду: apt-get install auditd audispd-plugins
+
+16. Настроить параметры параметры работы auditd
+Настроить размер хранимых журналов событий, ротацию журналов событий.
+1) Изменить в файле /etc/audit/auditd.conf параметр max_log_file на необходимый объем (Мб) файлов журналов. 2) В файле /etc/audit/auditd.conf задать параметру max_log_file_action значение keep_logs.
+
+
+17. Включить журналирование загрузки Linux
+В файле конфигурации загрузчика Grub изменить настройки.
+1) В файл /etc/default/grub добавить строку GRUB_CMDLINE_LINUX="audit=1". 2) Обновить конфигурацию Grub выполнив команду update-grub
+
+18. Настроить журналирование событий изменения времени на узле
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules : -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change  
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+ -a always,exit -F arch=b64 -S clock_settime -k time-change
+ -w /etc/localtime -p wa -k time-change
+-a always,exit -F arch=b32 -S clock_settime -k time-change
+
+
+19. Настроить журналирование событий изменения групп и пользователей
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules : -w /etc/passwd -p wa -k identity   
+ -w /etc/group -p wa -k identity
+-w /etc/gshadow -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/security/opasswd -p wa -k identity
+
+20. Настроить журналирование событий изменения сетевого окружения.
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :  -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+  -w /etc/issue -p wa -k system-locale
+ -w /etc/hosts -p wa -k system-locale
+ -w /etc/sysconfig/network -p wa -k system-locale
+ -w /etc/issue.net -p wa -k system-locale
+
+
+21. Настроить журналирование событий входа и выхода из системы
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :  
+ -w /var/log/faillog -p wa -k logins
+-w /var/log/lastlog -p wa -k logins
+-w /var/log/tallylog -p wa -k logins
+
+
+22. Настроить журналирование на события начала, окончания сессий пользователя
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules : -w /var/run/utmp -p wa -k session 
+ -w /var/log/wtmp -p wa -k logins
+-w /var/log/btmp -p wa -k logins
+
+
+23. Настроить журналирование событий дискреционного контроля доступа
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :   
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod
+ -a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=500 -F auid!=4294967295 -k perm_mod
+ -a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=500 -F auid!=4294967295 -k perm_mod
+ -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod
+
+
+24. Настроить журналирование событий неудачного доступа к файлам
+
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :    
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access
+
+
+25. Настроить журналирование событий монтирования файловых систем
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :  
+-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k mounts
+-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts
+
+26. Настроить журналирование событий, связанных с командой sudo
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules : -w /etc/sudoers -p wa -k scope               
+-w /etc/sudoers.d/ -p wa -k scope
+  -w /var/log/sudo.log -p wa -k actions
+
+
+27. Настроить журналирование событий, связанных с работой модуля ядра
+Внести изменения в файл правил auditd - /etc/audit/rules.d/*.rules.
+Внести следующие строки в файл правил auditd - /etc/audit/rules.d/*.rules :  
+ -w /sbin/insmod -p x -k modules
+-w /sbin/rmmod -p x -k modules
+-w /sbin/modprobe -p x -k modules
+ -a always,exit -F arch=b64 -S init_module -S delete_module -k modules
+
+28. Настроить параметры journald
+Внести изменения в файл /etc/systemd/journald.conf
+1) Внести в файл /etc/systemd/journald.conf следующие строки: ForwardToSyslog=yes / Compress=yes / Storage=persistent
+
+
+29. Настроить параметры rsyslog
+Внести изменения в файл /etc/rsyslog.conf
+Внести изменения в файл /etc/rsyslog.conf : *.emerg :omusrmsg:* mail.* -/var/log/mail mail.info -/var/log/mail.info mail.warning -/var/log/mail.warn mail.err /var/log/mail.err news.crit -/var/log/news/news.crit news.err -/var/log/news/news.err news.notice -/var/log/news/news.notice *.=warning;*.=err -/var/log/warn *.crit /var/log/warn *.*;mail.none;news.none -/var/log/messages local0,local1.* -/var/log/localmessages local2,local3.* -/var/log/localmessages local4,local5.* -/var/log/localmessages local6,local7.* -/var/log/localmessages                                $FileCreateMode 0640                                            
+30. Настроить доступ определенных пользователей к файлам планировщика задач
+Внести логины пользователей, которым разрешено создавать задачи в файл /etc/cron.allow или /etc/at.allow
+
+31. Настроить минимальное время между сменой пароля пользователя
+Внести изменения в файл /etc/login.defs
+Внести изменения в файл /etc/login.defs - PASS_MIN_DAYS <число дней между сменой пароля>
+
+32. Настроить уведомление пользователя об истчении срока действия пароля
+Внести изменения в файл /etc/login.defs
+Внести изменения в файл /etc/login.defs - PASS_WARN_AGE <число дней между сменой пароля>
+
+33. Настроить блокирование пароля учетной записи по истечению определенного срока
+Выполнить команду useradd -D -f 30
+
+34. Настроить стандартную маску доступа к вновь создаваемым файлам
+Внести изменения в /etc/bashrc, /etc/profile, /etc/profile.d/*.sh
+Внести изменения в /etc/bashrc, /etc/profile, /etc/profile.d/*.sh добавив строку umask 027
+
+35. Настроить SSH-доступ
+Внести изменения в /etc/ssh/sshd_config
+1) Включить протокол версии 2 - внести строку Protocol 2                            2) Изменить уровень журналирования событий  на Verbose - LogLevel Verbose
+3) Установить максимальное количество активных сессий - MaxAuthTries 5
+4) Установить значение IgnoreRhosts yes
+5) Отменить вход под пользователем root - PermitRootLogin no
+6) Отключить вход с пустым паролем - PermitEmptyPasswords no
+7) Настроить доступ при помощи параметров AllowUsers/AllowGroups/DenyUsers/DenyGroups
+8) Запретить использовать ssh для перенаправления - AllowTcpForwarding no
+9) Установить максимальное количество открытых сессий - MaxSessions 4
+10) Настроить автоматический выход неактивного пользователя: ClientAliveInterval 300 / ClientAliveCountMax 0
+11) Запретить ssh-туннелирование: AllowStreamLocalForwarding no / GatewayPorts no / PermitTunnel no
+
+36. Настроить таймер для доступа к sudo
+Внести изменения в /etc/sudoers
+В файл /etc/sudoers внести строку: Defaults timestamp_timeout=0
+
+37. Настроить sudo на использование псевдо-терминалов
+Внести изменения в /etc/sudoers
+В файл /etc/sudoers внести строку: Defaults use_pty
+
+38. Настроить контроль целостности ОС при помощи утилиты AFICK
+Внести изменения в /etc/afick.conf
+1) Настроить передачу событий afick в syslog. Для этого необходимо внести строку: report_syslog := yes
+2) Настроить контроль целостности для следующих файлов и каталогов:
+"/boot/grub/menu.lst
+/bin/
+/etc/cron.allow
+/etc/cron.deny
+/etc/cron.d/
+/etc/cron.daily/
+/etc/cron.hourly/
+/etc/cron.monthly/
+/etc/cron.weekly/
+/etc/crontab
+/etc/systemd/system
+/etc/ssh/sshd_config
+/etc/gshadow
+/etc/shadow
+/etc/rsyslog.conf
+/etc/login.defs
+/etc/localtime
+/etc/systemd/journald.conf
+/etc/fstab
+/etc/exports
+/etc/inittab
+/etc/xdg/autostart
+/etc/rc.local 
+/etc/rc.common
+/etc/profile
+"
+"
+/etc/shells
+/etc/profile
+/etc/profile.d
+/etc/zshenv
+/etc/zprofile
+/etc/zlogin
+/etc/ld.so.preload
+/etc/pam.d/
+/etc/sudoers
+/etc/passwd
+/etc/shadow
+/etc/sysctl.conf
+/etc/grub.d/
+/etc/default/grub
+/etc/audit/
+/etc/hosts 
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/sysconfig/network
+/etc/group 
+/sbin/
+/usr/bin/
+/usr/sbin/"
+
+
+
+
+
+
+
+
+
+
+
