@@ -53,18 +53,13 @@
 - Опыт работы с основными утилитами для проведения тестов на проникновение: nmap, metasploit, burp suite pro, а также из GNU Kali Linux;
 - Знакомство с PT AF и AI, PT MaxPatrol, SolarWinds, Kaspersky, Guardium, Wallix, Varonis, Websense, SearchInform.
 
-- Опыт работы с Threat Intelligence;
-- Опыт поиска и анализа информации об угрозах ИБ;
-- Опыт работы с основными утилитами для проведения тестов на проникновение: nmap, metasploit, burp suite pro, а также из GNU Kali Linux;
-- Знакомство с PT AF и AI, PT MaxPatrol, SolarWinds, Kaspersky, Guardium, Wallix, Varonis, Websense, SearchInform.
-
 - Опыт работы на L2 (и желание расти) и/или L3
 - Опыт работы с одной или более SIEM/XDR системами из списка: QRadar, Splunk, MP SIEM, ArcSight ESM, Wazuh;
 - Опыт проведения расследований различных типов инцидентов;
 - Опыт разработки правил корреляции;
 - Умение анализировать журналы регистрации событий в различных системах (ОС, СЗИ, сетевое оборудование, прикладное ПО и т.д.);
 - Знание тактик и техник компьютерных атак, методов и средств их обнаружения (в частности – матрица MITRE ATT&CK, Cyber kill-chain);
-Опыт активного противодействия Red team или APT будет плюсом.
+- Опыт активного противодействия Red team или APT будет плюсом.
 
 
 
