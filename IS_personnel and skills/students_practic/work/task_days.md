@@ -161,13 +161,103 @@ aircrack-ng -w /usr/share/wordlists/rockyou.txt -b <BSSID> handshake.pcap
 
 **Пример pcap:**
 
-* [2024-09-04-traffic-analysis-exercise.pcap](https://www.malware-traffic-analysis.net/2024/09/04/2024-09-04-traffic-analysis-exercise.pcap.zip) (пароль: `infected`)
+# День 13. Анализ инцидента
 
-**Задание:**
+## Исходные данные
 
-1. `zeek -r suspect.pcap`
-2. Объединить с syslog, построить timeline.csv (ts, src, dst, event).
-3. Найти IOC.
+### Пример PCAP
+
+* **Архив:** [Wireshark‑tutorial‑identifying‑hosts‑and‑users‑5‑pcaps.zip](https://github.com/PaloAltoNetworks/Unit42-Wireshark-tutorials/raw/main/Wireshark-tutorial-identifying-hosts-and-users-5-pcaps.zip)
+  *Размер: \~2 МБ*
+  **Пароль для распаковки:** `infected`
+* Извлеките любой файл из архива (например, `Wireshark-tutorial-identifying-hosts-and-users-5-pcaps-3.pcap`) и переименуйте его в `suspect.pcap` для удобства.
+
+```bash
+# 1. Запустите Zeek для разбора дампа
+ezeek -r suspect.pcap
+
+# 2. Проверяем, что создались базовые логи
+tree -L 1  # увидите conn.log, http.log, dns.log, smtp.log, files.log и т.д.
+```
+
+*Основные логи, которые понадобятся:*
+
+| Лог         | Назначение                             |
+| ----------- | -------------------------------------- |
+| `conn.log`  | Все сетевые подключения (5‑tuples)     |
+| `http.log`  | HTTP‑запросы и ответы                  |
+| `dns.log`   | DNS‑запросы и ответы                   |
+| `smtp.log`  | SMTP‑сеансы, информация о письмах      |
+| `files.log` | Метаданные извлечённых файлов (hashes) |
+
+---
+
+## Шаг 2. Построение `timeline.csv`
+
+1. **Подготовьте syslog** (или сгенерируйте тестовый) в формате CSV:
+
+   ```text
+   2025-06-15T08:35:12Z,10.0.0.5,192.168.1.10,Failed SSH login
+   2025-06-15T08:35:18Z,10.0.0.5,192.168.1.10,Account locked
+   ```
+
+2. **Склеиваем Zeek‑лог и syslog** c помощью Python (Pandas):
+
+   ```python
+   import pandas as pd
+
+   # --- Zeek conn.log ---
+   zeek = pd.read_table(
+       'conn.log', comment='#', sep=r'\s+', engine='python',
+       usecols=['ts', 'id.orig_h', 'id.resp_h', 'proto']
+   ).rename(columns={
+       'ts': 'epoch',
+       'id.orig_h': 'src',
+       'id.resp_h': 'dst',
+       'proto': 'event'
+   })
+   zeek['ts'] = pd.to_datetime(zeek['epoch'], unit='s', utc=True)
+   zeek = zeek[['ts', 'src', 'dst', 'event']]
+
+   # --- Syslog (уже CSV) ---
+   syslog = pd.read_csv('syslog.csv', names=['ts', 'src', 'dst', 'event'],
+                        parse_dates=['ts'], utc=True)
+
+   # --- Сводим и сортируем ---
+   timeline = pd.concat([zeek, syslog]).sort_values('ts')
+   timeline.to_csv('timeline.csv', index=False)
+   print("timeline.csv готово")
+   ```
+
+*Файл `timeline.csv` будет иметь вид:*
+
+```text
+ts,src,dst,event
+2025-06-15 08:35:12+00:00,10.0.0.5,192.168.1.10,Failed SSH login
+2025-06-15 08:35:18+00:00,10.0.0.5,192.168.1.10,Account locked
+...
+```
+
+---
+
+## Шаг 3. Поиск индикаторов компрометации (IOC)
+
+1. **DNS / HTTP**
+
+   * Просмотрите `dns.log`, `http.log` на необычные домены, одноразовые TLD.
+2. **Hash‑суммы файлов**
+
+   * В `files.log` найдите `sha256`/`md5` скачанных объектов.
+   * Проверяйте хэши на *VirusTotal*, *MalwareBazaar*, *Feodo Tracker* и др.
+3. **SMTP‑трафик** (если есть)
+
+   * Извлеките вложения, оцените тему/тело писем на фишинг.
+4. **C2‑обращения**
+
+   * В `conn.log` ищите частые небольшие сессии к одному IP, нетипичные порты.
+5. **Отчёт**
+
+   * Составьте список: `IOC, тип, описание (phishing site, loader, C2, etc.)`.
 
 ---
 
