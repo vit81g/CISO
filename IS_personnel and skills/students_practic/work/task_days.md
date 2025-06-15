@@ -161,10 +161,6 @@ aircrack-ng -w /usr/share/wordlists/rockyou.txt -b <BSSID> handshake.pcap
 
 **Пример pcap:**
 
-# День 13. Анализ инцидента
-
-## Исходные данные
-
 ### Пример PCAP
 
 * **Архив:** [Wireshark‑tutorial‑identifying‑hosts‑and‑users‑5‑pcaps.zip](https://github.com/PaloAltoNetworks/Unit42-Wireshark-tutorials/raw/main/Wireshark-tutorial-identifying-hosts-and-users-5-pcaps.zip)
