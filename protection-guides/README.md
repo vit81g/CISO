@@ -21,10 +21,15 @@
 ### 📁 siem
 - [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) — рекомендации по настройке правил корреляции и мониторингу.
 
-### 📁 tools
+### 📁 tools (все файлы содержат инструкции по установке и примеры использования)
 - [responder_usage.md](./tools/responder_usage.md) — гайд по Responder (перехват NTLM-хэшей).
 - [impacket_usage.md](./tools/impacket_usage.md) — гайд по Impacket (Pass-the-Hash, SMB/LDAP Relay, Zerologon).
 - [psexec_examples.md](./tools/psexec_examples.md) — примеры использования `psexec.py`.
+- [mitm6_tool.md](./tools/mitm6_tool.md) — IPv6-based MITM для AD.
+- [crackmapexec_tool.md](./tools/crackmapexec_tool.md) — автоматизация атак на SMB, WinRM, RDP.
+- [bloodhound_tool.md](./tools/bloodhound_tool.md) — построение графа привилегий в AD (подробная установка Neo4j и BloodHound).
+- [mimikatz_tool.md](./tools/mimikatz_tool.md) — извлечение учётных данных из памяти.
+- [sharphound_tool.md](./tools/sharphound_tool.md) — сбор данных для BloodHound.
 
 ### 📁 attacks
 - [NTLM Relay](./attacks/ntlm-relay_attack.md) — релей NTLM-аутентификации.
@@ -32,6 +37,7 @@
 - [DHCP Spoofing](./attacks/dhcp-spoofing_attack.md) — подмена параметров сети.
 - [Zerologon](./attacks/zerologon_attack.md) — эксплуатация CVE-2020-1472.
 - [PrinterBug](./attacks/printerbug_attack.md) — эксплуатация MS-RPRN.
+- [MSSQL / HTTP Relay](./attacks/mssql-http-relay_attack.md) — релей NTLM на MSSQL и HTTP.
 
 ### 📁 protection
 - [AD Hardening](./protection/ad-hardening_protection.md) — усиление безопасности Active Directory.
