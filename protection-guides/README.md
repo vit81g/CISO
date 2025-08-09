@@ -27,18 +27,18 @@
 - [psexec_examples.md](./tools/psexec_examples.md) — примеры использования `psexec.py`.
 
 ### 📁 attacks
-- [NTLM Relay](./attacks/ntlm-relay/README.md) — релей NTLM-аутентификации.
-- [Kerberos](./attacks/kerberos/README.md) — атаки на Kerberos (Kerberoasting, AS-REP Roasting, Pass-the-Ticket).
-- [DHCP Spoofing](./attacks/dhcp-spoofing/README.md) — подмена параметров сети.
-- [Zerologon](./attacks/zerologon/README.md) — эксплуатация CVE-2020-1472.
-- [PrinterBug](./attacks/printerbug/README.md) — эксплуатация MS-RPRN.
+- [NTLM Relay](./attacks/ntlm-relay_attack.md) — релей NTLM-аутентификации.
+- [Kerberos](./attacks/kerberos_attack.md) — атаки на Kerberos (Kerberoasting, AS-REP Roasting, Pass-the-Ticket).
+- [DHCP Spoofing](./attacks/dhcp-spoofing_attack.md) — подмена параметров сети.
+- [Zerologon](./attacks/zerologon_attack.md) — эксплуатация CVE-2020-1472.
+- [PrinterBug](./attacks/printerbug_attack.md) — эксплуатация MS-RPRN.
 
 ### 📁 protection
-- [AD Hardening](./protection/ad-hardening/README.md) — усиление безопасности Active Directory.
-- [SMB/LDAP Hardening](./protection/smb-ldap-hardening/README.md) — защита SMB и LDAP.
-- [DHCP/DNS Security](./protection/dhcp-dns-security/README.md) — защита служб DHCP и DNS.
-- [Endpoint Hardening](./protection/endpoint-hardening/README.md) — защита конечных точек.
-- [Network Segmentation](./protection/network-segmentation/README.md) — сегментация сети.
+- [AD Hardening](./protection/ad-hardening_protection.md) — усиление безопасности Active Directory.
+- [SMB/LDAP Hardening](./protection/smb-ldap-hardening_protection.md) — защита SMB и LDAP.
+- [DHCP/DNS Security](./protection/dhcp-dns-security_protection.md) — защита служб DHCP и DNS.
+- [Endpoint Hardening](./protection/endpoint-hardening_protection.md) — защита конечных точек.
+- [Network Segmentation](./protection/network-segmentation_protection.md) — сегментация сети.
 
 ### 📁 playbooks
 - [ntlm-relay-response.md](./playbooks/ntlm-relay-response.md) — реагирование на NTLM Relay.
