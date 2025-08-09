@@ -2,33 +2,60 @@
 
 Данный раздел репозитория содержит практические материалы по защите инфраструктуры Active Directory от атак типа **NTLM Relay**, а также рекомендации по мониторингу и выявлению подобных атак с помощью SIEM.
 
+---
+
+## 📌 Схема атаки
+![NTLM Relay Scheme](./scheme/NTLM_Relay_Scheme.png)
+
+---
+
 ## 📂 Структура
 
 ### 📁 checklist
-- [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) — пошаговый чек-лист по защите от NTLM Relay, включая сетевые, протокольные и организационные меры.
+- [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) — пошаговый чек-лист по защите от NTLM Relay.
 
 ### 📁 scheme
 - [NTLM_Relay_Scheme.png](./scheme/NTLM_Relay_Scheme.png) — наглядная схема атаки NTLM Relay.
 - [NTLM_Relay_Scheme_source.drawio](./scheme/NTLM_Relay_Scheme_source.drawio) — исходник схемы для редактирования в draw.io/diagrams.net.
 
 ### 📁 siem
-- [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) — рекомендации по настройке правил корреляции и мониторингу в SIEM для детектирования NTLM Relay и смежных техник.
+- [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) — рекомендации по настройке правил корреляции и мониторингу.
 
 ### 📁 tools
-- [responder_usage.md](./tools/responder_usage.md) — примеры работы с инструментом Responder (перехват NTLM-хэшей через LLMNR/NBT-NS/WPAD).
-- [impacket_usage.md](./tools/impacket_usage.md) — примеры и сценарии использования Impacket (Pass-the-Hash, SMB/LDAP Relay, Zerologon).
-- [psexec_examples.md](./tools/psexec_examples.md) — наглядная таблица использования `psexec.py` для аутентификации через NTLM-хэши.
+- [responder_usage.md](./tools/responder_usage.md) — гайд по Responder (перехват NTLM-хэшей).
+- [impacket_usage.md](./tools/impacket_usage.md) — гайд по Impacket (Pass-the-Hash, SMB/LDAP Relay, Zerologon).
+- [psexec_examples.md](./tools/psexec_examples.md) — примеры использования `psexec.py`.
+
+### 📁 attacks
+- [NTLM Relay](./attacks/ntlm-relay/README.md) — релей NTLM-аутентификации.
+- [Kerberos](./attacks/kerberos/README.md) — атаки на Kerberos (Kerberoasting, AS-REP Roasting, Pass-the-Ticket).
+- [DHCP Spoofing](./attacks/dhcp-spoofing/README.md) — подмена параметров сети.
+- [Zerologon](./attacks/zerologon/README.md) — эксплуатация CVE-2020-1472.
+- [PrinterBug](./attacks/printerbug/README.md) — эксплуатация MS-RPRN.
+
+### 📁 protection
+- [AD Hardening](./protection/ad-hardening/README.md) — усиление безопасности Active Directory.
+- [SMB/LDAP Hardening](./protection/smb-ldap-hardening/README.md) — защита SMB и LDAP.
+- [DHCP/DNS Security](./protection/dhcp-dns-security/README.md) — защита служб DHCP и DNS.
+- [Endpoint Hardening](./protection/endpoint-hardening/README.md) — защита конечных точек.
+- [Network Segmentation](./protection/network-segmentation/README.md) — сегментация сети.
+
+### 📁 playbooks
+- [ntlm-relay-response.md](./playbooks/ntlm-relay-response.md) — реагирование на NTLM Relay.
+- [general-incident-response.md](./playbooks/general-incident-response.md) — универсальный план реагирования.
+
+---
 
 ## 🎯 Цели
-- Повысить осведомлённость команды ИБ о векторах атак на основе NTLM Relay.
-- Предоставить готовые инструкции и схемы для обучения и тестирования в лаборатории.
-- Сформировать базовый набор правил для SIEM с учётом специфики инфраструктуры.
+- Повысить осведомлённость команды ИБ о векторах атак на основе NTLM Relay и смежных техник.
+- Предоставить готовые инструкции и схемы для обучения и тестирования.
+- Сформировать набор правил для SIEM под инфраструктуру организации.
 
 ## 🛡 Рекомендуемое применение
-1. Использовать [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) для аудита текущей инфраструктуры.
-2. Развернуть в тестовой среде сценарии из [responder_usage.md](./tools/responder_usage.md) и [impacket_usage.md](./tools/impacket_usage.md) для практического понимания работы инструментов.
-3. Внедрить правила из [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) в существующую SIEM и протестировать детектирование.
-4. Проводить обучение ИТ и ИБ персонала с использованием [NTLM_Relay_Scheme.png](./scheme/NTLM_Relay_Scheme.png).
+1. Использовать [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) для аудита.
+2. Запустить сценарии из [tools](./tools) в тестовой среде.
+3. Внедрить правила из [siem](./siem) в боевую SIEM.
+4. Проводить обучение с использованием схем и материалов из [attacks](./attacks).
 
 ## 📜 Лицензия
 Материалы предоставляются для учебных и тестовых целей. Использование в продуктивной среде — на усмотрение владельца инфраструктуры.
