@@ -1,6 +1,6 @@
-# Protection Guides — Руководства по защите и противодействию NTLM Relay
+# Protection Guides — Комплексные меры защиты AD и сетевой инфраструктуры
 
-Данный раздел репозитория содержит практические материалы по защите инфраструктуры Active Directory от атак типа **NTLM Relay**, а также рекомендации по мониторингу и выявлению подобных атак с помощью SIEM.
+Данный раздел репозитория содержит практические материалы по защите инфраструктуры Active Directory от актуальных техник атак (включая NTLM Relay, релей SMB/LDAP/HTTP, атаки на Kerberos, dMSA/gMSA, Zerologon и др.), а также рекомендации по мониторингу и выявлению подобных действий с помощью SIEM.
 
 ---
 
@@ -14,17 +14,17 @@
 
 ## 📂 Структура
 
-### 📁 checklist
+### 📁 Чек-лист
 - [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) — пошаговый чек-лист по защите от NTLM Relay.
 
-### 📁 scheme
+### 📁 Схема
 - [NTLM_Relay_Scheme.png](./scheme/NTLM_Relay_Scheme.png) — наглядная схема атаки NTLM Relay.
 - [NTLM_Relay_Scheme_source.drawio](./scheme/NTLM_Relay_Scheme_source.drawio) — исходник схемы для редактирования в draw.io/diagrams.net.
 
-### 📁 siem
+### 📁 SIEM
 - [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) — рекомендации по настройке правил корреляции и мониторингу.
 
-### 📁 tools
+### 📁 Инструменты
 - [BloodHound](./tools/bloodhound_tool.md)
 - [CrackMapExec](./tools/crackmapexec_tool.md)
 - [Impacket](./tools/impacket_usage.md)
@@ -34,7 +34,7 @@
 - [Responder](./tools/responder_usage.md)
 - [SharpHound](./tools/sharphound_tool.md)
 
-### 📁 attacks
+### 📁 Реализация атак
 - [AD Trusts Attack Paths (BloodHound)](./attacks/ad-trusts-attack-paths-bloodhound.md)
 - [BadSuccessor — Эскалация через dMSA](./attacks/badsuccessor-abuse-dmsa.md)
 - [CVE-2025-21293 — Privilege Escalation в AD DS](./attacks/cve-2025-21293-priv-esc.md)
@@ -53,7 +53,7 @@
 - [SMB Relay (Updated)](./attacks/smb-relay-updated.md)
 - [Zerologon Attack](./attacks/zerologon_attack.md)
 
-### 📁 protection
+### 📁 Защита
 - [AD Hardening](./protection/ad-hardening_protection.md) — усиление безопасности Active Directory.
 - [SMB/LDAP Hardening](./protection/smb-ldap-hardening_protection.md) — защита SMB и LDAP.
 - [DHCP/DNS Security](./protection/dhcp-dns-security_protection.md) — защита служб DHCP и DNS.
