@@ -1,0 +1,185 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
+  <diagram id="attack-defense-map" name="AD Attack-Defense Map">
+    <mxGraphModel dx="2056" dy="1318" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="AD Attack–Defense Map (MITRE ATT&amp;CK flow)" style="text;html=1;fontSize=20;fontStyle=1;align=center;verticalAlign=middle" parent="1" vertex="1">
+          <mxGeometry x="20" y="10" width="1880" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-attack" value="Attack Chain" style="layer" parent="0" />
+        <mxCell id="lane1" value="🌐 Initial Access" style="swimlane;fontStyle=1;horizontal=1;startSize=40;rounded=1;strokeColor=#c62828;fillColor=#ffebee;align=center;" parent="layer-attack" vertex="1">
+          <mxGeometry x="20" y="70" width="450" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="ia1" value="LLMNR Poisoning (Updated) — T1557.001" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane1" vertex="1">
+          <mxGeometry x="40" y="60" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ia2" value="IPv6 Relay (MITM6) — T1557" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane1" vertex="1">
+          <mxGeometry x="40" y="130" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ia3" value="SMB Relay (Updated) — T1021.002" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane1" vertex="1">
+          <mxGeometry x="40" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ia4" value="DHCP Spoofing — T1557" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane1" vertex="1">
+          <mxGeometry x="40" y="270" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ia5" value="PrinterBug (MS-RPRN) — T1557" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane1" vertex="1">
+          <mxGeometry x="40" y="340" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="lane1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="270" as="sourcePoint" />
+            <mxPoint x="110" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lane2" value="🔑 Credential Access" style="swimlane;fontStyle=1;horizontal=1;startSize=40;rounded=1;strokeColor=#c62828;fillColor=#ffebee;align=center;" parent="layer-attack" vertex="1">
+          <mxGeometry x="490" y="70" width="450" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="wK7xnwcPNvGGyL0qtLoM-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="lane2" source="ca1" target="ca3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca1" value="BadSuccessor (Abusing dMSA)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane2" vertex="1">
+          <mxGeometry x="40" y="60" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wK7xnwcPNvGGyL0qtLoM-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="lane2" source="ca2" target="ca4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wK7xnwcPNvGGyL0qtLoM-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="lane2" source="ca2" target="ca4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca2" value="Golden dMSA Attack" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane2" vertex="1">
+          <mxGeometry x="40" y="130" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ca3" value="Kerberoasting (Updated, gMSA) — T1558.003" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane2" vertex="1">
+          <mxGeometry x="40" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ca4" value="Pass-the-Hash — T1550.002" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane2" vertex="1">
+          <mxGeometry x="40" y="270" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ca5" value="Mimikatz / pypykatz — T1003.001/T1003.006" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane2" vertex="1">
+          <mxGeometry x="40" y="340" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3" value="🔄 Lateral Movement" style="swimlane;fontStyle=1;horizontal=1;startSize=40;rounded=1;strokeColor=#c62828;fillColor=#ffebee;align=center;" parent="layer-attack" vertex="1">
+          <mxGeometry x="960" y="70" width="450" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="lm1" value="AD Trusts Attack Paths" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane3" vertex="1">
+          <mxGeometry x="40" y="60" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lm2" value="MSSQL Relay / HTTP Relay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane3" vertex="1">
+          <mxGeometry x="40" y="130" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lm3" value="psexec / CrackMapExec — T1021.002" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane3" vertex="1">
+          <mxGeometry x="40" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lane4" value="🏰 Domain Compromise" style="swimlane;fontStyle=1;horizontal=1;startSize=40;rounded=1;strokeColor=#c62828;fillColor=#ffebee;align=center;" parent="layer-attack" vertex="1">
+          <mxGeometry x="1430" y="70" width="450" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="dc1" value="Hybrid AD Authentication Bypass" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane4" vertex="1">
+          <mxGeometry x="40" y="60" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dc2" value="Zerologon — CVE-2020-1472" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane4" vertex="1">
+          <mxGeometry x="40" y="130" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dc3" value="Full DC Takeover" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#b71c1c" parent="lane4" vertex="1">
+          <mxGeometry x="40" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ia1" target="ca3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ia2" target="ca4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ia3" target="lm3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="280" />
+              <mxPoint x="730" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ia5" target="lm3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ca3" target="lm3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ca4" target="lm3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ca1" target="lm1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ca2" target="lm1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1110" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="lm1" target="dc1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="lm2" target="dc3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1540" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="lm3" target="dc3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="ia3" target="dc3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="320" />
+              <mxPoint x="950" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#d32f2f;strokeWidth=3;endArrow=classic;endFill=1" parent="layer-attack" source="dc1" target="dc3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1560" y="250" />
+              <mxPoint x="1560" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="layer-defense" value="Defensive Measures" style="layer" parent="0" />
+        <mxCell id="def_header" value="🛡 Defensive Measures" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#e8f5e9;fontStyle=1" parent="layer-defense" vertex="1">
+          <mxGeometry x="20" y="540" width="1860" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="def1" value="Hardening AD: dMSA ACLs, SIDHistory quarantine, Tiered Admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="20" y="610" width="600" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="def2" value="Hardening SMB/LDAP: SMB/LDAP signing, Restrict NTLM, EPA/CB" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="640" y="610" width="600" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="def3" value="Hardening DHCP/DNS: DHCP Snooping, RA/DHCPv6 Guard, disable WPAD/LLMNR" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="1260" y="610" width="620" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="def4" value="Endpoint Hardening: Credential Guard, LSA PPL, WDAC/AppLocker, LAPS" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="20" y="690" width="600" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="def5" value="Network Segmentation: PAW, DC/Sync/SQL isolation, deny User→DC/Sync" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="640" y="690" width="600" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="def6" value="SIEM Detection: 4624/4769/4662/4765-4766/2886-2889, paging &amp; thresholds" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9" parent="layer-defense" vertex="1">
+          <mxGeometry x="1260" y="690" width="620" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

