@@ -54,11 +54,11 @@
 - [Zerologon Attack](./attacks/zerologon_attack.md)
 
 ### 📁 Защита
-- [AD Hardening](./protection/ad-hardening_protection.md) — усиление безопасности Active Directory.
-- [SMB/LDAP Hardening](./protection/smb-ldap-hardening_protection.md) — защита SMB и LDAP.
-- [DHCP/DNS Security](./protection/dhcp-dns-security_protection.md) — защита служб DHCP и DNS.
-- [Endpoint Hardening](./protection/endpoint-hardening_protection.md) — защита конечных точек.
-- [Network Segmentation](./protection/network-segmentation_protection.md) — сегментация сети.
+- [AD Hardening](./protection/hardening-active-directory.md) — усиление безопасности Active Directory.
+- [SMB/LDAP Hardening](./protection/hardening-smb-ldap.md) — защита SMB и LDAP.
+- [DHCP/DNS Security](./protection/hardening-dhcp-dns.md) — защита служб DHCP и DNS.
+- [Endpoint Hardening](./protection/hardening-endpoints.md) — защита конечных точек.
+- [Network Segmentation](./protection/network-segmentation.md) — сегментация сети.
 
 ### 📁 playbooks
 - [ntlm-relay-response.md](./playbooks/ntlm-relay-response.md) — реагирование на NTLM Relay.
