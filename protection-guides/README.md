@@ -61,21 +61,10 @@
 - [Network Segmentation](./protection/network-segmentation.md) — сегментация сети.
 
 ### 📁 playbooks
-- [ntlm-relay-response.md](./playbooks/ntlm-relay-response.md) — реагирование на NTLM Relay.
-- [general-incident-response.md](./playbooks/general-incident-response.md) — универсальный план реагирования.
-
----
-
-## 🎯 Цели
-- Повысить осведомлённость команды ИБ о векторах атак на основе NTLM Relay и смежных техник.
-- Предоставить готовые инструкции и схемы для обучения и тестирования.
-- Сформировать набор правил для SIEM под инфраструктуру организации.
-
-## 🛡 Рекомендуемое применение
-1. Использовать [NTLM_Relay_Checklist.md](./checklist/NTLM_Relay_Checklist.md) для аудита.
-2. Запустить сценарии из [tools](./tools) в тестовой среде.
-3. Внедрить правила из [siem](./siem) в боевую SIEM.
-4. Проводить обучение с использованием схем и материалов из [attacks](./attacks).
-
-## 📜 Лицензия
-Материалы предоставляются для учебных и тестовых целей. Использование в продуктивной среде — на усмотрение владельца инфраструктуры.
+- [General Incident Response](./playbooks/general-incident-response.md) — общий план реагирования на инциденты ИБ.
+- [NTLM Relay Response](./playbooks/ntlm-relay-response.md) — реагирование на атаку NTLM Relay.
+- [AD dMSA Compromise](./playbooks/playbook-ad-dmsa-compromise.md) — реагирование на компрометацию dMSA.
+- [AD Trusts Abuse](./playbooks/playbook-ad-trusts-abuse.md) — реагирование на злоупотребление trust-отношениями AD.
+- [Hybrid AD Bypass](./playbooks/playbook-hybrid-ad-bypass.md) — реагирование на обход аутентификации в гибридном AD.
+- [Kerberoasting gMSA](./playbooks/playbook-kerberoasting-gmsa.md) — реагирование на атаку Kerberoasting против gMSA.
+- [NTLM Relay](./playbooks/playbook-ntlm-relay.md) — план реагирования на NTLM Relay (детализированный).
