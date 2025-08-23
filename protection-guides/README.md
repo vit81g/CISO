@@ -35,23 +35,7 @@
 - [SharpHound](./tools/sharphound_tool.md)
 
 ### 📁 Реализация атак
-- [AD Trusts Attack Paths (BloodHound)](./attacks/ad-trusts-attack-paths-bloodhound.md) — эксплуатация trust-отношений AD для междоменного компромисса.
-- [BadSuccessor — Эскалация через dMSA](./attacks/badsuccessor-abuse-dmsa.md) — подмена свойств dMSA для получения привилегий домена.
-- [CVE-2025-21293 — Privilege Escalation в AD DS](./attacks/cve-2025-21293-priv-esc.md) — эксплуатация уязвимости в Active Directory Domain Services для повышения привилегий.
-- [DHCP Spoofing](./attacks/dhcp-spoofing_attack.md) — подмена параметров DHCP для перехвата трафика или атак relay.
-- [Entra ID Sync Abuse](./attacks/entra-id-sync-abuse.md) — злоупотребление синхронизацией Entra ID для компрометации учетных данных.
-- [Golden dMSA Attack](./attacks/golden-dmsa-attack.md) — кросс-доменная атака через подбор пароля dMSA для персистентного доступа.
-- [Hybrid AD Authentication Bypass](./attacks/hybrid-ad-authentication-bypass.md) — обход аутентификации в гибридном AD с Entra ID.
-- [IPv6 Relay (MITM6)](./attacks/ipv6-relay-mitm6.md) — MITM-атака через IPv6 для перехвата NTLM.
-- [Kerberoasting (Updated)](./attacks/kerberoasting-updated.md) — кража и оффлайн-взлом тикетов Kerberos для gMSA.
-- [LDAP DoS Attack](./attacks/ldap-dos-attack.md) — перегрузка службы LDAP для отказа в обслуживании AD.
-- [LLMNR Poisoning (Updated)](./attacks/llmnr-poisoning-updated.md) — отравление LLMNR для кражи NTLM-хэшей.
-- [MSSQL / HTTP Relay Attack](./attacks/mssql-http-relay_attack.md) — релей аутентификации через MSSQL или HTTP для эскалации привилегий.
-- [NTLM Relay Attack](./attacks/ntlm-relay_attack.md) — релей NTLM-аутентификации для выполнения команд от имени пользователя.
-- [Pass-the-Hash](./attacks/pass-the-hash.md) — использование NTLM-хэша вместо пароля для аутентификации.
-- [PrinterBug Attack](./attacks/printerbug_attack.md) — эксплуатация MS-RPRN для вызова аутентификации с целевого хоста.
-- [SMB Relay (Updated)](./attacks/smb-relay-updated.md) — релей SMB-сессий для выполнения кода.
-- [Zerologon Attack](./attacks/zerologon_attack.md) — эксплуатация CVE-2020-1472 для полного захвата контроллера домена.
+- [Ссылка](https://github.com/vit81g/Attack_AD/tree/main) на репозиторий по реализация атак.
 
 ### 📁 Защита
 - [AD Hardening](./protection/hardening-active-directory.md) — усиление безопасности Active Directory.
