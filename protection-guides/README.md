@@ -23,12 +23,13 @@
 
 ### 📁 SIEM
 - [SIEM_monitoring_recommendations.md](./siem/SIEM_monitoring_recommendations.md) — рекомендации по настройке правил корреляции и мониторингу.
+- [ссылка SIEM Wazuh (private)](https://github.com/vit81g/SIEM-Wazuh) — рекомендации по архитектуре, установке и настройке правил корреляции.
 
 ### 📁 Инструменты
-- [Ссылка](https://github.com/vit81g/Attack_AD/tree/main) на репозиторий c инструментами и реализацит атак.
+- [Ссылка (private)](https://github.com/vit81g/Attack_AD/tree/main) на репозиторий c инструментами и реализацит атак.
 
 ### 📁 Реализация атак
-- [Ссылка](https://github.com/vit81g/Attack_AD/tree/main) на репозиторий c инструментами и реализацит атак.
+- [Ссылка (private)](https://github.com/vit81g/Attack_AD/tree/main) на репозиторий c инструментами и реализацит атак.
 
 ### 📁 Защита
 - [AD Hardening](./protection/hardening-active-directory.md) — усиление безопасности Active Directory.
