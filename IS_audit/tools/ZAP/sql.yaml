@@ -1,0 +1,79 @@
+---
+env:
+  contexts:
+  - name: "sqlfiddle"
+    urls:
+    - "https://sqlfiddle.com/"
+    includePaths:
+    - "https://sqlfiddle.com/.*"
+    excludePaths:
+    - "https://sqlfiddle.com/logout.*"  # Исключение чувствительных путей, если нужно
+
+jobs:
+- type: spider
+  name: "Full Traditional Spider"
+  parameters:
+    context: "sqlfiddle"
+    maxChildren: 20  # Увеличено для полноты
+    maxDepth: 10  # Увеличено для глубокого сканирования
+    requestWaitTime: 1000  # 1 секунда для снижения нагрузки
+    handleParameters: all  # Обработка всех параметров для SQLi тестов
+
+- type: ajaxSpider
+  name: "AJAX Spider"
+  parameters:
+    context: "sqlfiddle"
+    browserId: "firefox-headless"
+    numberOfBrowsers: 2
+    clickOnce: false  # Кликать несколько раз для полноты
+    clickDefaultElements: true
+    randomInputs: true  # Случайные вводы для лучшего покрытия
+    maxCrawlStates: 50  # Увеличено для полноты
+
+- type: passiveScan
+  name: "Passive Scan"
+  parameters:
+    maxAlertsPerRule: 20
+
+- type: active
+  name: "Full Active Scan for SQL Injection"
+  parameters:
+    context: "sqlfiddle"
+    maxRuleDurationInMins: 10  # Увеличено для полноты
+    maxScanDurationInMins: 60  # Общий таймаут 60 минут
+  rules:
+    # SQL Injection rules with high strength and low threshold for comprehensive testing
+    - id: 40018  # SQL Injection (generic)
+      threshold: low
+      strength: high
+    - id: 40019  # SQL Injection - MySQL
+      threshold: low
+      strength: high
+    - id: 40020  # SQL Injection - Hypersonic
+      threshold: low
+      strength: high
+    - id: 40021  # SQL Injection - Oracle
+      threshold: low
+      strength: high
+    - id: 40022  # SQL Injection - PostgreSQL
+      threshold: low
+      strength: high
+    - id: 40023  # SQL Injection - MsSQL
+      threshold: low
+      strength: high
+    - id: 40025  # SQL Injection - SQLite
+      threshold: low
+      strength: high
+    # Add more if needed, e.g., time-based or other variants
+
+- type: report
+  name: "SQL Injection Scan Report"
+  parameters:
+    template: "traditional-html"
+    reportDir: "C:\\Users\\vit81\\Documents\\zap"  # Или ваш путь
+    reportFile: "zap-sqli-report.html"
+    reportTitle: "Full SQL Injection Scan Report for sqlfiddle.com"
+    reportDescription: "Comprehensive automated scan for SQL injection vulnerabilities"
+    risks: high,medium,low
+    confidences: high,medium,low,falsepositive
+    sections: siteRisks,riskDesc,traditionalStats,alertsTree,alerts

@@ -1,0 +1,137 @@
+---
+env:
+  contexts:
+  - name: "default"
+    urls:
+    - "https://example.com"  # Замените на ваш целевой URL
+    includePaths:
+    - "https?://example\\.com/.*"  # Регекс для включения всех путей сайта
+    excludePaths:
+    - "https?://example\\.com/logout.*"  # Пример исключения чувствительных путей
+  vars:
+    requestTimeoutInMs: 60000  # Увеличенный таймаут в миллисекундах (60 секунд)
+
+jobs:
+- type: spider
+  name: "Traditional Spider"
+  parameters:
+    context: "default"
+    maxChildren: 10  # Разумный порог URLs (ограничение ветвлений)
+    maxDepth: 5  # Ограничение глубины сканирования для безопасности
+    requestWaitTime: 2000  # Увеличенный интервал между запросами (2 секунды)
+    handleParameters: ignored  # Игнорировать параметры для снижения нагрузки
+
+- type: ajaxSpider
+  name: "AJAX Spider with WebDriver Check"
+  parameters:
+    context: "default"
+    browserId: "firefox-headless"  # Использование headless Firefox с WebDriver
+    numberOfBrowsers: 1  # Один браузер для минимальной нагрузки
+    clickOnce: true  # Кликать элементы только один раз для проверки
+    clickDefaultElements: true
+    randomInputs: false  # Избегать случайных вводов для безопасности
+    maxCrawlStates: 10  # Ограничение состояний для порога
+
+- type: passiveScan
+  name: "Passive Scan for Basic Vulnerabilities"
+  parameters:
+    maxAlertsPerRule: 10  # Ограничение алертов на правило
+
+- type: active
+  name: "Active Scan for OWASP Top 10"
+  parameters:
+    context: "default"
+    maxRuleDurationInMins: 5  # Ограничение времени на правило для безопасности
+    maxScanDurationInMins: 30  # Общий таймаут сканирования
+  policy: "Default Policy"  # Или кастомная, но rules переопределяют
+  rules:
+    # A01: Injection (SQL, Command, LDAP)
+    - id: 40018  # SQL Injection
+      threshold: low
+      strength: medium  # Medium для баланса безопасности и покрытия
+    - id: 40024  # Command Injection
+      threshold: low
+      strength: medium
+    - id: 40015  # LDAP Injection
+      threshold: low
+      strength: medium
+
+    # A02: Broken Authentication
+    - id: 10105  # Weak Authentication
+      threshold: medium
+      strength: medium
+    - id: 10011  # Password Autocomplete
+      threshold: low
+      strength: low
+
+    # A03: Sensitive Data Exposure
+    - id: 2  # Private IP Disclosure
+      threshold: low
+      strength: low
+    - id: 10094  # Base64 Disclosure
+      threshold: low
+      strength: low
+    - id: 41  # Source Code Disclosure
+      threshold: medium
+      strength: medium
+
+    # A04: XML External Entities (XXE)
+    - id: 90017  # XXE
+      threshold: low
+      strength: high
+
+    # A05: Broken Access Control
+    - id: 6  # Path Traversal
+      threshold: low
+      strength: medium
+    - id: 10032  # Directory Listing
+      threshold: medium
+      strength: low
+
+    # A06: Security Misconfiguration
+    - id: 10051  # Missing Content-Security-Policy
+      threshold: medium
+      strength: low
+    - id: 10020  # X-Frame-Options Header
+      threshold: low
+      strength: low
+    - id: 14  # Server Leaks Information
+      threshold: low
+      strength: low
+
+    # A07: Cross-Site Scripting (XSS)
+    - id: 40012  # Reflected XSS
+      threshold: low
+      strength: medium
+    - id: 40014  # Stored XSS
+      threshold: low
+      strength: medium
+
+    # A08: Insecure Deserialization
+    - id: 90004  # Insecure Deserialization
+      threshold: low
+      strength: high
+
+    # A09: Using Components with Known Vulnerabilities
+    - id: 10049  # Vulnerable JS Library (Retire.js)
+      threshold: medium
+      strength: low
+    # Note: Убедитесь, что add-on Retire.js установлен
+
+    # A10: Insufficient Logging & Monitoring
+    - id: 10009  # No Logging Detected (passive)
+      threshold: high
+      strength: low
+    # Note: Logging часто требует ручной проверки, но passive rules могут помочь
+
+- type: report
+  name: "Generate HTML Report"
+  parameters:
+    template: "traditional-html"  # Шаблон для OWASP Top 10 отчета
+    reportDir: "C:\\Users\\vit81\\Documents\\zap"  # Папка для отчета (Windows path)
+    reportFile: "zap-report.html"  # Имя файла
+    reportTitle: "OWASP Top 10 Scan Report"
+    reportDescription: "Automated scan for OWASP Top 10 vulnerabilities"
+    risks: high,medium,low  # Включить все уровни рисков
+    confidences: high,medium,low,falsepositive  # Все уверенности
+    sections: siteRisks,riskDesc,traditionalStats,alertsTree,alerts  # Разделы отчета

