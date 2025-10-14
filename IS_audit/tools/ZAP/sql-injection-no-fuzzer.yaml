@@ -1,0 +1,101 @@
+---
+env:
+  vars:
+    targetUrl: "https://terminalspb.ru/"  # Измените здесь имя сайта
+    reportPath: "C:\\Users\\vit81\\Documents\\zap"  # Измените здесь путь сохранения
+  contexts:
+  - name: "default"
+    urls:
+    - "${targetUrl}"
+    includePaths:
+    - "${targetUrl}/.*"
+    excludePaths:
+    - "${targetUrl}/logout.*"
+    - "${targetUrl}/admin.*"
+  authentication:
+    method: "formBasedAuthentication"
+    context: "default"
+    loginUrl: "${targetUrl}login"  # Замените на реальный URL логина, если есть
+    username: "your_username"  # Замените на реальный логин
+    password: "your_password"  # Замените на реальный пароль
+    loginRequestData: "username={%username}&password={%password}"
+    verifyString: "Welcome"  # Строка для проверки логина
+
+jobs:
+- type: reqDelay
+  name: "Request Delay"
+  parameters:
+    delayInMs: 2000  # Пауза 2 секунды между запросами для снижения нагрузки
+
+- type: spider
+  name: "Full Traditional Spider"
+  parameters:
+    context: "default"
+    maxChildren: 30  # Увеличено для большего охвата
+    maxDepth: 15  # Увеличено для глубокого сканирования
+    requestWaitTime: 1500  # 1.5 секунды задержки
+    handleParameters: all  # Обработка всех параметров
+
+- type: ajaxSpider
+  name: "AJAX Spider"
+  parameters:
+    context: "default"
+    browserId: "firefox-headless"
+    numberOfBrowsers: 3  # Увеличено для скорости
+    clickOnce: false
+    clickDefaultElements: true
+    randomInputs: true
+    maxCrawlStates: 100  # Увеличено для полноты
+
+- type: passiveScan
+  name: "Passive Scan"
+  parameters:
+    maxAlertsPerRule: 30
+
+- type: active
+  name: "Full Active Scan for SQL Injection"
+  parameters:
+    context: "default"
+    maxRuleDurationInMins: 20  # Увеличено для тщательности
+    maxScanDurationInMins: 120  # 2 часа на полный тест
+    threadCount: 6  # Увеличение потоков
+  rules:
+    - id: 40018  # Generic SQLi
+      threshold: low
+      strength: insane  # Максимальная интенсивность
+    - id: 40019  # MySQL
+      threshold: low
+      strength: insane
+    - id: 40020  # Hypersonic
+      threshold: low
+      strength: insane
+    - id: 40021  # Oracle
+      threshold: low
+      strength: insane
+    - id: 40022  # PostgreSQL
+      threshold: low
+      strength: insane
+    - id: 40023  # MsSQL
+      threshold: low
+      strength: insane
+    - id: 40025  # SQLite
+      threshold: low
+      strength: insane
+    - id: 40027  # Time Based
+      threshold: low
+      strength: insane
+    - id: 40028  # Error Based
+      threshold: low
+      strength: insane
+
+- type: report
+  name: "SQL Injection Scan Report"
+  parameters:
+    template: "traditional-html"
+    reportDir: "${reportPath}"
+    reportFile: "zap-sqli-report.html"
+    reportTitle: "SQL Injection Scan Report for ${targetUrl}"
+    reportDescription: "Comprehensive automated scan for SQL injection vulnerabilities"
+    risks: high,medium,low
+    confidences: high,medium,low,falsepositive
+    sections: siteRisks,riskDesc,traditionalStats,alertsTree,alerts
