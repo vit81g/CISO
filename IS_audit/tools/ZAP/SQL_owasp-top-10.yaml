@@ -1,0 +1,89 @@
+---
+env:
+  vars:
+    targetUrl: "https://sqlfiddle.com/"  # Измените здесь имя сайта
+    reportPath: "C:\\Users\\vit81\\Documents\\zap"  # Измените здесь путь сохранения
+  contexts:
+  - name: "default"
+    urls:
+    - "${targetUrl}"
+    includePaths:
+    - "${targetUrl}/.*"
+    excludePaths:
+    - "${targetUrl}/logout.*"
+    - "${targetUrl}/admin.*"
+  authentication:
+    method: "formBasedAuthentication"
+    context: "default"
+    loginUrl: "${targetUrl}login"  # Замените на реальный URL логина, если есть
+    username: "your_username"  # Замените на реальный логин
+    password: "your_password"  # Замените на реальный пароль
+    loginRequestData: "username={%username}&password={%password}"
+    verifyString: "Welcome"  # Строка для проверки логина
+
+jobs:
+- type: reqDelay
+  name: "Request Delay"
+  parameters:
+    delayInMs: 2000  # Пауза 2 секунды между запросами
+
+- type: spider
+  name: "Full Traditional Spider"
+  parameters:
+    context: "default"
+    maxChildren: 30
+    maxDepth: 15
+    requestWaitTime: 1500
+    handleParameters: all
+
+- type: ajaxSpider
+  name: "AJAX Spider"
+  parameters:
+    context: "default"
+    browserId: "firefox-headless"
+    numberOfBrowsers: 3
+    clickOnce: false
+    clickDefaultElements: true
+    randomInputs: true
+    maxCrawlStates: 100
+
+- type: passiveScan
+  name: "Passive Scan"
+  parameters:
+    maxAlertsPerRule: 30
+
+- type: active
+  name: "Full Active Scan for OWASP Top 10"
+  parameters:
+    context: "default"
+    maxRuleDurationInMins: 20
+    maxScanDurationInMins: 120
+    threadCount: 6
+  policy: "OWASP_Top_10"  # Использование встроенной политики OWASP Top 10
+  rules:
+    # A01: Injection (SQL, Command, LDAP)
+    - id: 40018  # SQL Injection (generic)
+      threshold: low
+      strength: insane
+    - id: 40019  # SQL Injection - MySQL
+      threshold: low
+      strength: insane
+    - id: 40020  # SQL Injection - Hypersonic
+      threshold: low
+      strength: insane
+    - id: 40021  # SQL Injection - Oracle
+      threshold: low
+      strength: insane
+    - id: 40022  # SQL Injection - PostgreSQL
+      threshold: low
+      strength: insane
+    - id: 40023  # SQL Injection - MsSQL
+      threshold: low
+      strength: insane
+    - id: 40025  # SQL Injection - SQLite
+      threshold: low
+      strength: insane
+    - id: 40027  # SQL Injection - Time Based
+      threshold: low
+      strength: insane
+    - id: 400
