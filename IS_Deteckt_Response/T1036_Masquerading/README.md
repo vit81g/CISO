@@ -81,11 +81,11 @@ T1036_Masquerading/
 
 Скриншоты в каталоге `pics/`:
 
-- ``01_SIEM.jpg`  — карточка алерта;
+- 01_SIEM.jpg  — карточка алерта;
 
 [![SIEM Alert](./pics/01_SIEM.jpg)](./pics/01_SIEM.jpg)
 ` 
-- ``02_SIEM.jpg` — детализация события и цепочки процессов.
+- 02_SIEM.jpg — детализация события и цепочки процессов.
 
 [![SIEM Event Details](./pics/02_SIEM.jpg)](./pics/02_SIEM.jpg)
 ` 
