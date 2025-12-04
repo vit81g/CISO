@@ -81,14 +81,14 @@ T1036_Masquerading/
 
 Скриншоты в каталоге `pics/`:
 
-- ``01_SIEM.jpg`
+- ``01_SIEM.jpg`  — карточка алерта;
 
 [![SIEM Alert](./pics/01_SIEM.jpg)](./pics/01_SIEM.jpg)
-` — карточка алерта;
-- ``02_SIEM.jpg`
+` 
+- ``02_SIEM.jpg` — детализация события и цепочки процессов.
 
 [![SIEM Event Details](./pics/02_SIEM.jpg)](./pics/02_SIEM.jpg)
-` — детализация события и цепочки процессов.
+` 
 
 Аналитик фиксирует:
 
@@ -121,16 +121,16 @@ Get-ChildItem -Path "\\host_name\c$\Program Files (x86)" -Force |
     Where-Object { $_.Attributes -match "Hidden" }
 ```
 
-Скриншоты хода проверки находятся в ``03_PS.jpg`
+Скриншоты хода проверки находятся в ``./pics`
 
 [![PowerShell Access 1](./pics/03_PS.jpg)](./pics/03_PS.jpg)
-`, ``04_PS.jpg`
+``
 
 [![PowerShell Access 2](./pics/04_PS.jpg)](./pics/04_PS.jpg)
-`, ``05_PS.jpg`
+``
 
 [![PowerShell Hidden Folder](./pics/05_PS.jpg)](./pics/05_PS.jpg)
-`, ``06_PS.jpg`
+``
 
 [![PowerShell Deep Scan](./pics/06_PS.jpg)](./pics/06_PS.jpg)
 `.
