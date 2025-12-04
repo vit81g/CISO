@@ -124,16 +124,16 @@ Get-ChildItem -Path "\\host_name\c$\Program Files (x86)" -Force |
 Скриншоты хода проверки находятся в ``./pics`
 
 [![PowerShell Access 1](./pics/03_PS.jpg)](./pics/03_PS.jpg)
-``
+
 
 [![PowerShell Access 2](./pics/04_PS.jpg)](./pics/04_PS.jpg)
-``
+
 
 [![PowerShell Hidden Folder](./pics/05_PS.jpg)](./pics/05_PS.jpg)
-``
+
 
 [![PowerShell Deep Scan](./pics/06_PS.jpg)](./pics/06_PS.jpg)
-`.
+
 
 **Вывод:** скрытый каталог `csrss` существует, но недоступен для простой навигации, что дополнительно указывает на попытку маскировки.
 
