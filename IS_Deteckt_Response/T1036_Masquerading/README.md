@@ -8,7 +8,7 @@
 | Дата / время обнаружения| *указать по данным KUMA* |
 | Источник обнаружения    | SIEM KUMA (корреляционное правило по Masquerading) |
 | Затронутая система      | Рабочая станция `host_name` (Windows, домен `DOMAIN`) |
-| IP-адрес                | `10.32.16.229` |
+| IP-адрес                | `указать IP` |
 | MITRE ATT&CK            | T1036 — Masquerading |
 | Категория               | Подмена системного процесса (`csrss.exe`) |
 | Критичность             | Высокая (подмена критического системного процесса) |
@@ -28,15 +28,15 @@ T1036_Masquerading/
  │    └── T1036_Masquerading(csrss).docx
  ├── pics/
  │    ├── README.md            # Описание скриншотов
- │    ├── 01_SIEM.jpg
- │    ├── 02_SIEM.jpg
- │    ├── 03_PS.jpg
- │    ├── 04_PS.jpg
- │    ├── 05_PS.jpg
- │    ├── 06_PS.jpg
- │    ├── 07_Virus_total.jpg
- │    ├── 08_PS.jpg
- │    └── 09_PS.jpg
+ │    ├── `01_SIEM.jpg`
+ │    ├── `02_SIEM.jpg`
+ │    ├── `03_PS.jpg`
+ │    ├── `04_PS.jpg`
+ │    ├── `05_PS.jpg`
+ │    ├── `06_PS.jpg`
+ │    ├── `07_Virus_total.jpg`
+ │    ├── `08_PS.jpg`
+ │    └── `09_PS.jpg`
  └── scripts/
       └── README.md            # Набор команд и заготовок скриптов PowerShell
 ```
@@ -81,8 +81,14 @@ T1036_Masquerading/
 
 Скриншоты в каталоге `pics/`:
 
-- `01_SIEM.jpg` — карточка алерта;
-- `02_SIEM.jpg` — детализация события и цепочки процессов.
+- ``01_SIEM.jpg`
+
+[![SIEM Alert](./pics/01_SIEM.jpg)](./pics/01_SIEM.jpg)
+` — карточка алерта;
+- ``02_SIEM.jpg`
+
+[![SIEM Event Details](./pics/02_SIEM.jpg)](./pics/02_SIEM.jpg)
+` — детализация события и цепочки процессов.
 
 Аналитик фиксирует:
 
@@ -115,7 +121,19 @@ Get-ChildItem -Path "\\host_name\c$\Program Files (x86)" -Force |
     Where-Object { $_.Attributes -match "Hidden" }
 ```
 
-Скриншоты хода проверки находятся в `03_PS.jpg`, `04_PS.jpg`, `05_PS.jpg`, `06_PS.jpg`.
+Скриншоты хода проверки находятся в ``03_PS.jpg`
+
+[![PowerShell Access 1](./pics/03_PS.jpg)](./pics/03_PS.jpg)
+`, ``04_PS.jpg`
+
+[![PowerShell Access 2](./pics/04_PS.jpg)](./pics/04_PS.jpg)
+`, ``05_PS.jpg`
+
+[![PowerShell Hidden Folder](./pics/05_PS.jpg)](./pics/05_PS.jpg)
+`, ``06_PS.jpg`
+
+[![PowerShell Deep Scan](./pics/06_PS.jpg)](./pics/06_PS.jpg)
+`.
 
 **Вывод:** скрытый каталог `csrss` существует, но недоступен для простой навигации, что дополнительно указывает на попытку маскировки.
 
@@ -143,7 +161,10 @@ SHA256  6AE6FF34E461F0C26463D92174ABD70FEC15609EF953C28E0B861BA727C79565
 
 ### 5.3. VirusTotal: классификация как Grayware
 
-По результатам VirusTotal (скриншот `07_Virus_total.jpg`):
+По результатам VirusTotal (скриншот ``07_Virus_total.jpg`
+
+[![VirusTotal Result](./pics/07_Virus_total.jpg)](./pics/07_Virus_total.jpg)
+`):
 
 - Платформа: Windows;
 - Тип угрозы: **Grayware** (потенциально нежелательное ПО);
