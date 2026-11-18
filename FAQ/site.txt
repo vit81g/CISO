@@ -1,1 +1,20 @@
+Одна групповая политика, чтоб править всеми
 https://securelist.ru/group-policies-in-cyberattacks/111586/?ysclid=mcwyaf44lq107128120
+
+Rootkit обнаружение Windows: DKOM, SSDT hooking, minifilter и callback-манипуляции через WinDbg и Volatility
+https://codeby.net/threads/rootkit-obnaruzheniye-windows-dkom-ssdt-hooking-minifilter-i-callback-manipulyatsii-cherez-windbg-i-volatility.92639/?ysclid=mryju18kjd681127486
+
+GitHUB
+autoMate
+https://github.com/yuruotong1/autoMate/releases/tag/v3.0
+BlueHammerFix
+https://github.com/technoherder/BlueHammerFix/tree/main
+scanopy
+https://github.com/scanopy/scanopy
+
+for pentest/test
+Simple Python 3 HTTP server for logging all GET and POST requests
+https://gist.github.com/mdonkers/63e115cc0c79b4f6b8b3a6b797e485c7
+CVE-2023-22515 Exploit Script
+https://github.com/Chocapikk/CVE-2023-22515/blob/main/README.md
+
