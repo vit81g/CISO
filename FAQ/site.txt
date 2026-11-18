@@ -4,6 +4,12 @@ https://securelist.ru/group-policies-in-cyberattacks/111586/?ysclid=mcwyaf44lq10
 Rootkit обнаружение Windows: DKOM, SSDT hooking, minifilter и callback-манипуляции через WinDbg и Volatility
 https://codeby.net/threads/rootkit-obnaruzheniye-windows-dkom-ssdt-hooking-minifilter-i-callback-manipulyatsii-cherez-windbg-i-volatility.92639/?ysclid=mryju18kjd681127486
 
+Как используя Mimikatz на Kali Linux извлечь хеши Windows
+https://spy-soft.net/mimikatz-kali-linux/
+
+5 способов, как взять домен с помощью PetitPotam
+https://habr.com/ru/companies/jetinfosystems/articles/690440/?ysclid=mkavt100sa284484889
+
 GitHUB
 autoMate
 https://github.com/yuruotong1/autoMate/releases/tag/v3.0
