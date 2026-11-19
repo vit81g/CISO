@@ -1,0 +1,7 @@
+php_reports/
+__pycache__/
+*.py[cod]
+.env
+*.key
+*.pem
+*.crt
