@@ -24,3 +24,46 @@ https://gist.github.com/mdonkers/63e115cc0c79b4f6b8b3a6b797e485c7
 CVE-2023-22515 Exploit Script
 https://github.com/Chocapikk/CVE-2023-22515/blob/main/README.md
 
+CISO 
+Certified Ethical Hacker v13
+https://antcolony.ru/LiveCourses/Details/013410f8-ed8b-4295-6f69-08def9fb5965
+
+Подготовка к экзамену на сертификацию CISA
+https://antcolony.ru/LiveCourses/Details/d8d977d9-dd7f-4f29-eba8-08de58de8716
+
+CISO Workshop - Модернизация программы кибербезопасности
+https://antcolony.ru/LiveCourses/Details/9bf70dae-bc68-4d62-7dc6-08de7f7d09ef
+
+Подготовка к экзамену на сертификацию CISSP
+https://antcolony.ru/LiveCourses/Details/15ef3710-cc4b-4c24-eba9-08de58de8716
+
+Информационная безопасность по стандартам ISO
+https://antcolony.ru/LiveCourses/Details/a408128b-6809-459d-eba7-08de58de8716
+
+Метрики кибербезопасности
+https://antcolony.ru/LiveCourses/Details/5f344bea-937e-4772-36e8-08daf6fa6af0
+
+Архитектура корпоративной кибербезопасности
+https://antcolony.ru/LiveCourses/Details/6fe83e36-881a-4eda-fe3a-08dcaa536901
+
+Pentest сетевой инфраструктуры
+https://antcolony.ru/LiveCourses/Details/ed501d5e-284d-4c8a-ac2e-08daf3210b74
+
+Пентест Windows Active Directory
+https://antcolony.ru/LiveCourses/Details/7acd5306-b02e-4d99-e3cf-08decc83bd7d
+
+Эксплуатация уязвимостей web-приложений
+https://antcolony.ru/LiveCourses/Details/ba2af54f-524a-480c-6303-08df375a971a
+
+Методы обхода средств кибербезопасности
+https://antcolony.ru/LiveCourses/Details/e9ebf7c8-9d3f-4c51-ce5f-08daf580cfb7
+
+
+
+
+
+
+
+
+
+
